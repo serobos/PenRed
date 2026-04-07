@@ -433,6 +433,191 @@ talliesOperatorClasses = (
     TALLY_OT_EmergingParticleTally,
 )
 
+### Dicom
+###############
+
+# Add Calibration Element
+class DICOM_OT_addCalibrationElement(bpy.types.Operator):
+    bl_idname = "dicom_calibration.add_item"
+    bl_label = "Add Element"
+    bl_description = "Add one calibration constant"
+
+    def execute(self, context):
+        scene = context.scene
+        if scene and scene.penred_settings:
+            scene.penred_settings.dicomProperties.calibration.add()
+        return {"FINISHED"}
+
+# Remove Calibration Element
+class DICOM_OT_removeCalibrationElement(bpy.types.Operator):
+    bl_idname = "dicom_calibration.remove_item"
+    bl_label = "Remove Element"
+    bl_description = "Remove the last calibration constant"
+
+    def execute(self, context):
+        scene = context.scene
+        if scene and scene.penred_settings:
+            calibLen = len(scene.penred_settings.dicomProperties.calibration)
+            if calibLen > 0:
+                scene.penred_settings.dicomProperties.calibration.remove(calibLen-1)
+        return {"FINISHED"}
+
+
+# Add IntensityRanges Element
+class DICOM_OT_addIntensityRangesElement(bpy.types.Operator):
+    bl_idname = "dicom_intensityranges.add_item"
+    bl_label = "Add Element"
+    bl_description = "Add one Intensity-Ranges"
+
+    def execute(self, context):
+        scene = context.scene
+        if scene and scene.penred_settings:
+            scene.penred_settings.dicomProperties.intensityRanges.add()
+        return {"FINISHED"}
+
+# Remove IntensityRanges Element
+class DICOM_OT_removeIntensityRangesElement(bpy.types.Operator):
+    bl_idname = "dicom_intensityranges.remove_item"
+    bl_label = "Remove Element"
+    bl_description = "Remove the last Intensity-Ranges added"
+
+    def execute(self, context):
+        scene = context.scene
+        if scene and scene.penred_settings:
+            contLen = len(scene.penred_settings.dicomProperties.intensityRanges)
+            if contLen > 0:
+                scene.penred_settings.dicomProperties.intensityRanges.remove(contLen-1)
+        return {"FINISHED"}
+
+# Add IntensityRanges Element in Contours
+class DICOM_OT_addIntensityRangesContourElement(bpy.types.Operator):
+    bl_idname = "dicom_intensityrangescontour.add_item"
+    bl_label = "Add Element"
+    bl_description = "Add one Intensity-Ranges"
+
+    icontour: bpy.props.IntProperty()  # contour index
+
+    def execute(self, context):
+        scene = context.scene
+        if scene and scene.penred_settings:
+            scene.penred_settings.dicomProperties.contours[self.icontour].intensityRanges.add()
+        return {"FINISHED"}
+
+# Remove IntensityRanges Element in Contours
+class DICOM_OT_removeIntensityRangesContourElement(bpy.types.Operator):
+    bl_idname = "dicom_intensityrangescontour.remove_item"
+    bl_label = "Remove Element"
+    bl_description = "Remove the last Intensity-Ranges added"
+
+    icontour: bpy.props.IntProperty()  # contour index
+
+    def execute(self, context):
+        scene = context.scene
+        if scene and scene.penred_settings:
+            contLen = len(scene.penred_settings.dicomProperties.contours[self.icontour].intensityRanges)
+            if contLen > 0:
+                scene.penred_settings.dicomProperties.contours[self.icontour].intensityRanges.remove(contLen-1)
+        return {"FINISHED"}
+    
+# Add Ranges Element
+class DICOM_OT_addRangesElement(bpy.types.Operator):
+    bl_idname = "dicom_ranges.add_item"
+    bl_label = "Add Element"
+    bl_description = "Add one Ranges"
+
+    def execute(self, context):
+        scene = context.scene
+        if scene and scene.penred_settings:
+            scene.penred_settings.dicomProperties.ranges.add()
+        return {"FINISHED"}
+
+# Remove Ranges Element
+class DICOM_OT_removeRangesElement(bpy.types.Operator):
+    bl_idname = "dicom_ranges.remove_item"
+    bl_label = "Remove Element"
+    bl_description = "Remove the last Ranges added"
+
+    def execute(self, context):
+        scene = context.scene
+        if scene and scene.penred_settings:
+            contLen = len(scene.penred_settings.dicomProperties.ranges)
+            if contLen > 0:
+                scene.penred_settings.dicomProperties.ranges.remove(contLen-1)
+        return {"FINISHED"}
+
+# Add Ranges Element in Contours
+class DICOM_OT_addRangesContourElement(bpy.types.Operator):
+    bl_idname = "dicom_rangescontour.add_item"
+    bl_label = "Add Element"
+    bl_description = "Add one Ranges"
+
+    icontour: bpy.props.IntProperty()  # contour index
+
+    def execute(self, context):
+        scene = context.scene
+        if scene and scene.penred_settings:
+            scene.penred_settings.dicomProperties.contours[self.icontour].ranges.add()
+        return {"FINISHED"}
+
+# Remove Ranges Element in Contours
+class DICOM_OT_removeRangesContourElement(bpy.types.Operator):
+    bl_idname = "dicom_rangescontour.remove_item"
+    bl_label = "Remove Element"
+    bl_description = "Remove the last Ranges added"
+
+    icontour: bpy.props.IntProperty()  # contour index
+
+    def execute(self, context):
+        scene = context.scene
+        if scene and scene.penred_settings:
+            contLen = len(scene.penred_settings.dicomProperties.contours[self.icontour].ranges)
+            if contLen > 0:
+                scene.penred_settings.dicomProperties.contours[self.icontour].ranges.remove(contLen-1)
+        return {"FINISHED"}
+    
+
+# Add Contour Element
+class DICOM_OT_addContourElement(bpy.types.Operator):
+    bl_idname = "dicom_contours.add_item"
+    bl_label = "Add Element"
+    bl_description = "Add one contout constant"
+
+    def execute(self, context):
+        scene = context.scene
+        if scene and scene.penred_settings:
+            scene.penred_settings.dicomProperties.contours.add()
+        return {"FINISHED"}
+
+# Remove Contour Element
+class DICOM_OT_removeContourElement(bpy.types.Operator):
+    bl_idname = "dicom_contours.remove_item"
+    bl_label = "Remove Element"
+    bl_description = "Remove the last contour added"
+
+    def execute(self, context):
+        scene = context.scene
+        if scene and scene.penred_settings:
+            contLen = len(scene.penred_settings.dicomProperties.contours)
+            if contLen > 0:
+                scene.penred_settings.dicomProperties.contours.remove(contLen-1)
+        return {"FINISHED"}
+
+
+dicomClases = (
+    DICOM_OT_addCalibrationElement,
+    DICOM_OT_removeCalibrationElement,
+    DICOM_OT_addIntensityRangesElement,
+    DICOM_OT_removeIntensityRangesElement,
+    DICOM_OT_addIntensityRangesContourElement,
+    DICOM_OT_removeIntensityRangesContourElement,
+    DICOM_OT_addRangesElement,
+    DICOM_OT_removeRangesElement,
+    DICOM_OT_addRangesContourElement,
+    DICOM_OT_removeRangesContourElement,
+    DICOM_OT_addContourElement,
+    DICOM_OT_removeContourElement,
+)
+
 ### Materials
 ###############
 
@@ -2491,6 +2676,10 @@ def register():
     for cls in materialsOperatorClasses:
         bpy.utils.register_class(cls)
 
+    #Register dicom operators
+    for cls in dicomClases:
+        bpy.utils.register_class(cls)
+
     bpy.utils.register_class(export_penred)
     
     #Register simulation operators
@@ -2525,6 +2714,10 @@ def unregister():
         
     #Unregister material operators
     for cls in materialsOperatorClasses:
+        bpy.utils.unregister_class(cls)
+        
+    #Unregister dicom operators
+    for cls in dicomClases:
         bpy.utils.unregister_class(cls)
 
     bpy.utils.unregister_class(export_penred)
